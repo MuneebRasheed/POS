@@ -25,7 +25,7 @@ import {GET,DELETE}  from './service'
 import { ErrorHandling } from "config/ErrorHandler";
 
 
-const Products = () => {
+const SalesMan = () => {
   const [showModal, setShowModal] = React.useState(false);
   const [showEditModal, setShowEditModal] = React.useState(false);
   const [editData, setEditData] = React.useState({});
@@ -54,10 +54,10 @@ const Products = () => {
  
 
   const handleDelete = async (id) => {
-   
+    
       const response = await ErrorHandling(DELETE,id)
       response.status == 200 && getData();
- 
+  
   };
 
   const customStyles = {
@@ -86,9 +86,9 @@ const Products = () => {
       let filterObj = searchtableData.filter(
         (el) =>
           el.name?.toLowerCase().includes(value) ||
-          el.product?.toLowerCase().includes(value) ||
-          el.capacity.toString()?.toLowerCase().includes(value) 
-         
+          el.address?.toLowerCase().includes(value) ||
+          el.phone.toString()?.toLowerCase().includes(value) ||
+          el.email.toString()?.toLowerCase().includes(value)
       );
       setTableData(filterObj);
     } else {
@@ -102,16 +102,23 @@ const Products = () => {
       selector: (row) => row.name,
       sortable: true,
     },
+    
     {
-      name: "Product",
-      selector: (row) => row.product,
+      name: "Address",
+      selector: (row) => row.address,
       sortable: true,
     },
     {
-      name: "Capacity",
-      selector: (row) => row.capacity,
+      name: "Phone",
+      selector: (row) => row.phone,
       sortable: true,
     },
+    {
+      name: "Email",
+      selector: (row) => row.email,
+      sortable: true,
+    },
+
     {
       name: "Action",
       cell: (row, index) => (
@@ -151,7 +158,7 @@ const Products = () => {
                   as="h4"
                   className="d-flex justify-content-between align-items-center "
                 >
-                  <span>Fuel Tank </span>
+                  <span>Employee </span>
                   <div className="d-flex justify-content-between align-items-center">
                     <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
                       <FormGroup className="mb-0">
@@ -198,7 +205,6 @@ const Products = () => {
         </Row>
       </Container>
 
-     
 
       <FORM
         showModal={showEditModal}
@@ -212,4 +218,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default SalesMan;

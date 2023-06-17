@@ -16,20 +16,22 @@ import {UPDATE,CREATE}  from './service'
 import { ErrorHandling } from "config/ErrorHandler";
 
 const Edit = ({ showModal, setShowModal, getData ,data,editBool}) => {
+
+  console.log("Data",data)
   
   const INITIAL_VALUES1 = {
     name: data.name,
-    capacity: data.capacity,
-    product:data.product,
-  
+    phone: data.phone,
+    email:data.email,
+    address: data.address,
     
   };
 
   const INITIAL_VALUES = {
     name: "",
-    capacity: "",
-    product: "",
- 
+    phone: "",
+    email: "",
+    address: "",
     
   };
 
@@ -39,21 +41,21 @@ const Edit = ({ showModal, setShowModal, getData ,data,editBool}) => {
 
   const edit = async (values) => {
     setShowModal(false);
-   
-      const response = await ErrorHandling(UPDATE,data.id,values)
+ 
+      const response = await ErrorHandling(UPDATE,data.id,values) 
       if (response?.status) {
         setShowModal(false);
         getData();
       }
-   
+    
   };
 
   const create = async (values) => {
    
     setShowModal(false);
-   
+    
 
-      const response = await ErrorHandling(CREATE,values);
+      const response = await ErrorHandling(CREATE,values) 
       if (response?.status === 201) {
         setShowModal(false);
         getData();
@@ -66,7 +68,6 @@ const Edit = ({ showModal, setShowModal, getData ,data,editBool}) => {
       <Formik
         initialValues={editBool?INITIAL_VALUES1:INITIAL_VALUES}
         onSubmit={async (values, { resetForm }) => {
-          // alert("ascsdcfsdv");
           console.log(values, "sdshdgjhsdgsfg");
           if(editBool){
             console.log("dataedit")
@@ -95,7 +96,7 @@ const Edit = ({ showModal, setShowModal, getData ,data,editBool}) => {
                     <Modal.Header className="justify-content-center  admin-header ">
                       <div className="modal-title  ">
                     
-                     { editBool? "Edit The Product ":"Create New Product"}
+                     { editBool? "Edit The Suppliers ":"Create New Suppliers"}
                       </div>
                     </Modal.Header>
 
@@ -109,48 +110,53 @@ const Edit = ({ showModal, setShowModal, getData ,data,editBool}) => {
                             name="name"
                             type="text"
                             className="form-control"
-                            placeholder="Enter Tank name"
-                        
+                            placeholder="Enter supplier name"
+                            // value={data.name}
+                            // onChange={handleChange}
                           
                          
                           />
                         </div>
 
-                        <div className="form-group">
-                          <label htmlFor="roleid" className="mb-0">
-                            Product
-                          </label>
-                        </div>
-                        <Field
-                          as="select"
-                          name="product"
-                          className="form-control"
-                          onChange={(e) => {
-                            setFieldValue("product", e.target.value);
-                          }}
-                        >
-                          <option value="select role" defaultValue>
-                            select product type
-                          </option>
-                          <option value="petrol">Petrol</option>
-                          <option value="deisel">Deisel</option>
-                          <option value="cng">CNG</option>
-                          <option value="others">others</option>
-                        </Field>
+                      
                         <div className="form-group">
                           <label htmlFor="emailid" className="mb-0">
-                            Capacity
+                            Address
                           </label>
                           <Field
-                            name="capacity"
-                            type="number"
+                            name="address"
+                            type="text"
                             className="form-control"
-                            placeholder="Enter capacity of tank"
+                            placeholder="Enter  supplier address"
                             onChange={handleChange}
-                            
+                        
                           />
                         </div>
-                      
+                        <div className="form-group">
+                          <label htmlFor="passwordid" className="mb-0">
+                          Phone
+                          </label>
+                          <Field
+                            name="phone"
+                            type="phone"
+                            className="form-control"
+                            placeholder="Enter supplier phone number"
+                            onChange={handleChange}
+                          />
+                        </div>
+                        <div className="form-group">
+                          <label htmlFor="emailid" className="mb-0">
+                            Email
+                          </label>
+                          <Field
+                            name="email"
+                            type="email"
+                            className="form-control"
+                            placeholder="Enter supplier email"
+                            onChange={handleChange}
+                           
+                          />
+                        </div>
                         
                       </div>
                     </Modal.Body>

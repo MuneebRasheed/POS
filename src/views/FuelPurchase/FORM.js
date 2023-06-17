@@ -16,20 +16,22 @@ import {UPDATE,CREATE}  from './service'
 import { ErrorHandling } from "config/ErrorHandler";
 
 const Edit = ({ showModal, setShowModal, getData ,data,editBool}) => {
+
+
   
   const INITIAL_VALUES1 = {
     name: data.name,
-    capacity: data.capacity,
-    product:data.product,
-  
+    type: data.type,
+    selling_rate:data.selling_rate,
+    purchase_rate: data.purchase_rate,
     
   };
 
   const INITIAL_VALUES = {
     name: "",
-    capacity: "",
-    product: "",
- 
+    type: "",
+    selling_rate: "",
+    purchase_rate: "",
     
   };
 
@@ -51,9 +53,9 @@ const Edit = ({ showModal, setShowModal, getData ,data,editBool}) => {
   const create = async (values) => {
    
     setShowModal(false);
-   
+    
 
-      const response = await ErrorHandling(CREATE,values);
+      const response = await ErrorHandling (CREATE,values);
       if (response?.status === 201) {
         setShowModal(false);
         getData();
@@ -66,7 +68,6 @@ const Edit = ({ showModal, setShowModal, getData ,data,editBool}) => {
       <Formik
         initialValues={editBool?INITIAL_VALUES1:INITIAL_VALUES}
         onSubmit={async (values, { resetForm }) => {
-          // alert("ascsdcfsdv");
           console.log(values, "sdshdgjhsdgsfg");
           if(editBool){
             console.log("dataedit")
@@ -109,8 +110,8 @@ const Edit = ({ showModal, setShowModal, getData ,data,editBool}) => {
                             name="name"
                             type="text"
                             className="form-control"
-                            placeholder="Enter Tank name"
-                        
+                            placeholder="Enter product name"
+                     
                           
                          
                           />
@@ -118,15 +119,15 @@ const Edit = ({ showModal, setShowModal, getData ,data,editBool}) => {
 
                         <div className="form-group">
                           <label htmlFor="roleid" className="mb-0">
-                            Product
+                            Type
                           </label>
                         </div>
                         <Field
                           as="select"
-                          name="product"
+                          name="type"
                           className="form-control"
                           onChange={(e) => {
-                            setFieldValue("product", e.target.value);
+                            setFieldValue("type", e.target.value);
                           }}
                         >
                           <option value="select role" defaultValue>
@@ -139,18 +140,28 @@ const Edit = ({ showModal, setShowModal, getData ,data,editBool}) => {
                         </Field>
                         <div className="form-group">
                           <label htmlFor="emailid" className="mb-0">
-                            Capacity
+                            Purchase Rate
                           </label>
                           <Field
-                            name="capacity"
+                            name="purchase_rate"
                             type="number"
                             className="form-control"
-                            placeholder="Enter capacity of tank"
-                            onChange={handleChange}
-                            
+                            placeholder="Enter purchase price"
+                          
                           />
                         </div>
-                      
+                        <div className="form-group">
+                          <label htmlFor="passwordid" className="mb-0">
+                          Sale Rate
+                          </label>
+                          <Field
+                            name="selling_rate"
+                            type="number"
+                            className="form-control"
+                            placeholder="Enter Sale Price"
+                            onChange={handleChange}
+                          />
+                        </div>
                         
                       </div>
                     </Modal.Body>

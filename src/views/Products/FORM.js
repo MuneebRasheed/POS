@@ -13,6 +13,7 @@ import {
   Modal,
 } from "react-bootstrap";
 import {UPDATE,CREATE}  from './service'
+import { ErrorHandling } from "config/ErrorHandler";
 
 const Edit = ({ showModal, setShowModal, getData ,data,editBool}) => {
 
@@ -21,16 +22,16 @@ const Edit = ({ showModal, setShowModal, getData ,data,editBool}) => {
   const INITIAL_VALUES1 = {
     name: data.name,
     type: data.type,
-    salePrice:data.salePrice,
-    purchasePrice: data.purchasePrice,
+    selling_rate:data.selling_rate,
+    purchase_rate: data.purchase_rate,
     
   };
 
   const INITIAL_VALUES = {
     name: "",
     type: "",
-    salePrice: "",
-    purchasePrice: "",
+    selling_rate: "",
+    purchase_rate: "",
     
   };
 
@@ -40,30 +41,26 @@ const Edit = ({ showModal, setShowModal, getData ,data,editBool}) => {
 
   const edit = async (values) => {
     setShowModal(false);
-    try {
-      const response = await UPDATE(data.id,values)
+   
+      const response = await ErrorHandling(UPDATE,data.id,values)
       if (response?.status) {
         setShowModal(false);
         getData();
       }
-    } catch (error) {
-      console.log(error);
-    }
+    
   };
 
   const create = async (values) => {
    
     setShowModal(false);
-    try {
+   
 
-      const response = await CREATE(values);
+      const response = await ErrorHandling (CREATE,values);
       if (response?.status === 201) {
         setShowModal(false);
         getData();
       }
-    } catch (error) {
-      console.log(error);
-    }
+   
   };
 
   return (
@@ -114,8 +111,7 @@ const Edit = ({ showModal, setShowModal, getData ,data,editBool}) => {
                             type="text"
                             className="form-control"
                             placeholder="Enter product name"
-                            // value={data.name}
-                            // onChange={handleChange}
+                     
                           
                          
                           />
@@ -147,12 +143,11 @@ const Edit = ({ showModal, setShowModal, getData ,data,editBool}) => {
                             Purchase Rate
                           </label>
                           <Field
-                            name="purchasePrice"
+                            name="purchase_rate"
                             type="number"
                             className="form-control"
                             placeholder="Enter purchase price"
-                            onChange={handleChange}
-                            value={values.purchasePrice}
+                          
                           />
                         </div>
                         <div className="form-group">
@@ -160,7 +155,7 @@ const Edit = ({ showModal, setShowModal, getData ,data,editBool}) => {
                           Sale Rate
                           </label>
                           <Field
-                            name="salePrice"
+                            name="selling_rate"
                             type="number"
                             className="form-control"
                             placeholder="Enter Sale Price"

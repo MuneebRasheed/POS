@@ -54,10 +54,10 @@ const Products = () => {
  
 
   const handleDelete = async (id) => {
-   
-      const response = await ErrorHandling(DELETE,id)
+    
+      const response = await ErrorHandling( DELETE,id)
       response.status == 200 && getData();
- 
+
   };
 
   const customStyles = {
@@ -86,9 +86,9 @@ const Products = () => {
       let filterObj = searchtableData.filter(
         (el) =>
           el.name?.toLowerCase().includes(value) ||
-          el.product?.toLowerCase().includes(value) ||
-          el.capacity.toString()?.toLowerCase().includes(value) 
-         
+          el.unit?.toLowerCase().includes(value) ||
+          el.dispenser.toString()?.toLowerCase().includes(value) 
+      
       );
       setTableData(filterObj);
     } else {
@@ -103,15 +103,16 @@ const Products = () => {
       sortable: true,
     },
     {
-      name: "Product",
-      selector: (row) => row.product,
+      name: "Filling Unit",
+      selector: (row) => row.unit,
       sortable: true,
     },
     {
-      name: "Capacity",
-      selector: (row) => row.capacity,
+      name: "Dispenser",
+      selector: (row) => row.dispenser,
       sortable: true,
     },
+    
     {
       name: "Action",
       cell: (row, index) => (
@@ -151,7 +152,7 @@ const Products = () => {
                   as="h4"
                   className="d-flex justify-content-between align-items-center "
                 >
-                  <span>Fuel Tank </span>
+                  <span>Nozzels </span>
                   <div className="d-flex justify-content-between align-items-center">
                     <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
                       <FormGroup className="mb-0">
@@ -198,7 +199,6 @@ const Products = () => {
         </Row>
       </Container>
 
-     
 
       <FORM
         showModal={showEditModal}

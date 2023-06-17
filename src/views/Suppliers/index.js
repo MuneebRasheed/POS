@@ -1,29 +1,20 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { Button, Card, Container, Row, Col } from "react-bootstrap";
 import {
-  Button,
-  Card,
-  Container,
-  Row,
-  Col,
-} from "react-bootstrap";
-import {
-
   Form,
   FormGroup,
   InputGroupAddon,
   InputGroupText,
   Input,
   InputGroup,
-
 } from "reactstrap";
 import DataTable from "react-data-table-component";
 
 import FORM from "./FORM";
 
-import {GET,DELETE}  from './service'
+import { GET, DELETE } from "./service";
 import { ErrorHandling } from "config/ErrorHandler";
-
 
 const Products = () => {
   const [showModal, setShowModal] = React.useState(false);
@@ -33,13 +24,13 @@ const Products = () => {
   const [searchtableData, setSearchTableData] = useState([]);
   const [loading, setLoading] = useState(false);
 
- 
   const handleAdd = () => {
     setShowModal(false);
-    setShowEditModal(true)
+    setShowEditModal(true);
   };
 
   
+
   const getData = async () => {
     setLoading(true);
     const response = await ErrorHandling(GET);
@@ -51,24 +42,19 @@ const Products = () => {
     getData();
   }, []);
 
- 
-
   const handleDelete = async (id) => {
    
-      const response = await ErrorHandling(DELETE,id)
+      const response =await ErrorHandling(DELETE,id) ;
       response.status == 200 && getData();
- 
+    
   };
 
   const customStyles = {
     rows: {
-      style: {
-     
-      },
+      style: {},
     },
     headCells: {
       style: {
-     
         backgroundColor: "#3944BC",
         fontSize: "16px",
         fontWieght: "bold",
@@ -80,15 +66,14 @@ const Products = () => {
     },
   };
   const handleSearch = (e) => {
-    
     if (e.target.value.length) {
       let value = e.target.value.toLowerCase();
       let filterObj = searchtableData.filter(
         (el) =>
           el.name?.toLowerCase().includes(value) ||
-          el.product?.toLowerCase().includes(value) ||
-          el.capacity.toString()?.toLowerCase().includes(value) 
-         
+          el.address?.toLowerCase().includes(value) ||
+          el.phone?.toLowerCase().includes(value) ||
+          el.email?.toLowerCase().includes(value)
       );
       setTableData(filterObj);
     } else {
@@ -103,15 +88,21 @@ const Products = () => {
       sortable: true,
     },
     {
-      name: "Product",
-      selector: (row) => row.product,
+      name: "Address",
+      selector: (row) => row.address,
       sortable: true,
     },
     {
-      name: "Capacity",
-      selector: (row) => row.capacity,
+      name: "Phone",
+      selector: (row) => row.phone,
       sortable: true,
     },
+    {
+      name: "Email",
+      selector: (row) => row.email,
+      sortable: true,
+    },
+
     {
       name: "Action",
       cell: (row, index) => (
@@ -124,8 +115,8 @@ const Products = () => {
             aria-hidden="true"
             onClick={() => {
               setEditData(row);
-              setShowModal(true)
-              setShowEditModal(true)
+              setShowModal(true);
+              setShowEditModal(true);
             }}
           ></i>
           <i
@@ -151,7 +142,7 @@ const Products = () => {
                   as="h4"
                   className="d-flex justify-content-between align-items-center "
                 >
-                  <span>Fuel Tank </span>
+                  <span>Suppliers </span>
                   <div className="d-flex justify-content-between align-items-center">
                     <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
                       <FormGroup className="mb-0">
@@ -198,8 +189,6 @@ const Products = () => {
         </Row>
       </Container>
 
-     
-
       <FORM
         showModal={showEditModal}
         setShowModal={setShowEditModal}
@@ -207,7 +196,6 @@ const Products = () => {
         data={editData}
         editBool={showModal}
       />
-      
     </div>
   );
 };

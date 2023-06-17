@@ -22,6 +22,7 @@ import DataTable from "react-data-table-component";
 import FORM from "./FORM";
 
 import {GET,DELETE}  from './service'
+import { ErrorHandling } from "config/ErrorHandler";
 
 
 const Products = () => {
@@ -41,10 +42,10 @@ const Products = () => {
   
   const getData = async () => {
     setLoading(true);
-    const response = await GET();
+    const response = await ErrorHandling(GET);
     setLoading(false);
-    setTableData(response?.data);
-    setSearchTableData(response?.data);
+    setTableData(response?.data?.results);
+    setSearchTableData(response?.data?.results);
   };
   useEffect(() => {
     getData();
@@ -53,10 +54,10 @@ const Products = () => {
  
 
   const handleDelete = async (id) => {
-    try {
-      const response = await DELETE(id)
+ 
+      const response = await ErrorHandling(DELETE,id)
       response.status == 200 && getData();
-    } catch (error) {}
+ 
   };
 
   const customStyles = {
@@ -85,9 +86,7 @@ const Products = () => {
       let filterObj = searchtableData.filter(
         (el) =>
           el.name?.toLowerCase().includes(value) ||
-          el.type?.toLowerCase().includes(value) ||
-          el.purchasePrice.toString()?.toLowerCase().includes(value) ||
-          el.salePrice.toString()?.toLowerCase().includes(value)
+          el.tank?.toLowerCase().includes(value)
       );
       setTableData(filterObj);
     } else {
@@ -103,16 +102,9 @@ const Products = () => {
     },
     {
       name: "Tank",
-      selector: (row) => row.type,
+      selector: (row) => row.tank,
       sortable: true,
     },
-    {
-      name: "ID",
-      selector: (row) => row.salePrice,
-      sortable: true,
-    },
-    
-
     {
       name: "Action",
       cell: (row, index) => (

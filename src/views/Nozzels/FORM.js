@@ -16,19 +16,21 @@ import {UPDATE,CREATE}  from './service'
 import { ErrorHandling } from "config/ErrorHandler";
 
 const Edit = ({ showModal, setShowModal, getData ,data,editBool}) => {
+
+  console.log("Data",data)
   
   const INITIAL_VALUES1 = {
     name: data.name,
-    capacity: data.capacity,
-    product:data.product,
-  
+    unit: data.unit,
+    dispenser:data.dispenser,
+
     
   };
 
   const INITIAL_VALUES = {
     name: "",
-    capacity: "",
-    product: "",
+    unit: "",
+    dispenser: "",
  
     
   };
@@ -39,7 +41,7 @@ const Edit = ({ showModal, setShowModal, getData ,data,editBool}) => {
 
   const edit = async (values) => {
     setShowModal(false);
-   
+    
       const response = await ErrorHandling(UPDATE,data.id,values)
       if (response?.status) {
         setShowModal(false);
@@ -51,14 +53,14 @@ const Edit = ({ showModal, setShowModal, getData ,data,editBool}) => {
   const create = async (values) => {
    
     setShowModal(false);
-   
+  
 
       const response = await ErrorHandling(CREATE,values);
       if (response?.status === 201) {
         setShowModal(false);
         getData();
       }
-   
+    
   };
 
   return (
@@ -66,7 +68,6 @@ const Edit = ({ showModal, setShowModal, getData ,data,editBool}) => {
       <Formik
         initialValues={editBool?INITIAL_VALUES1:INITIAL_VALUES}
         onSubmit={async (values, { resetForm }) => {
-          // alert("ascsdcfsdv");
           console.log(values, "sdshdgjhsdgsfg");
           if(editBool){
             console.log("dataedit")
@@ -109,8 +110,9 @@ const Edit = ({ showModal, setShowModal, getData ,data,editBool}) => {
                             name="name"
                             type="text"
                             className="form-control"
-                            placeholder="Enter Tank name"
-                        
+                            placeholder="Enter product name"
+                            // value={data.name}
+                            // onChange={handleChange}
                           
                          
                           />
@@ -118,39 +120,48 @@ const Edit = ({ showModal, setShowModal, getData ,data,editBool}) => {
 
                         <div className="form-group">
                           <label htmlFor="roleid" className="mb-0">
-                            Product
+                            Filling Unit
                           </label>
                         </div>
                         <Field
                           as="select"
-                          name="product"
+                          name="unit"
                           className="form-control"
                           onChange={(e) => {
-                            setFieldValue("product", e.target.value);
+                            setFieldValue("unit", e.target.value);
                           }}
                         >
-                          <option value="select role" defaultValue>
-                            select product type
+                          <option value="select filling unit" defaultValue>
+                            select Filling unit
                           </option>
-                          <option value="petrol">Petrol</option>
-                          <option value="deisel">Deisel</option>
-                          <option value="cng">CNG</option>
+                          <option value="liter">Liter</option>
+                          <option value="kg">KG</option>
+                          <option value="no">NO</option>
+                          
+                        </Field>
+
+                        <div className="form-group">
+                          <label htmlFor="roleid" className="mb-0">
+                            Dispenser
+                          </label>
+                        </div>
+                        <Field
+                          as="select"
+                          name="dispenser"
+                          className="form-control"
+                          onChange={(e) => {
+                            setFieldValue("dispenser", e.target.value);
+                          }}
+                        >
+                          <option value="select dispenser" defaultValue>
+                            select dispenser
+                          </option>
+                          <option value="dispenser 2">dispenser2</option>
+                          <option value="dispenser 1">dispenser1</option>
+                          <option value="dispenser 3">dispenser3</option>
                           <option value="others">others</option>
                         </Field>
-                        <div className="form-group">
-                          <label htmlFor="emailid" className="mb-0">
-                            Capacity
-                          </label>
-                          <Field
-                            name="capacity"
-                            type="number"
-                            className="form-control"
-                            placeholder="Enter capacity of tank"
-                            onChange={handleChange}
-                            
-                          />
-                        </div>
-                      
+                       
                         
                       </div>
                     </Modal.Body>

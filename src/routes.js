@@ -25,6 +25,13 @@ import Icons from "views/examples/Icons.js";
 import Products from "views/Products"
 import FillingPaanel from "views/FillingPannel"
 import FuelTank from "views/FuelTank"
+import Nozzels from "views/Nozzels"
+import Suppliers from "views/Suppliers"
+import CarriageCompany from "views/CarriageCompany"
+import Employee from "views/Employee"
+import Customers from "views/Customers"
+import FuelPurchase from "views/FuelPurchase";
+import SalesMan from "views/SalesMan";
 
 var routes = [
   {
@@ -64,9 +71,58 @@ var routes = [
   },
   {
     path: "/fillingPannel",
-    name: "Filling Pannel",
+    name: "Filling Pannel(Dispenser)",
     icon: "ni ni-circle-08 text-pink",
     component: <FillingPaanel />,
+    layout: "/admin",
+  },
+  {
+    path: "/nozzels",
+    name: "Nozzels",
+    icon: "ni ni-circle-08 text-pink",
+    component: <Nozzels />,
+    layout: "/admin",
+  },
+  {
+    path: "/suppliers",
+    name: "Suppliers",
+    icon: "ni ni-circle-08 text-pink",
+    component: <Suppliers />,
+    layout: "/admin",
+  },
+  {
+    path: "/carriageCompany",
+    name: "Carriage Company",
+    icon: "ni ni-circle-08 text-pink",
+    component: <CarriageCompany />,
+    layout: "/admin",
+  },
+  {
+    path: "/saleMan",
+    name: "Sales Man",
+    icon: "ni ni-circle-08 text-pink",
+    component: <SalesMan />,
+    layout: "/admin",
+  },
+  {
+    path: "/customers",
+    name: "Customers",
+    icon: "ni ni-circle-08 text-pink",
+    component: <Customers />,
+    layout: "/admin",
+  },
+  {
+    path: "/employee",
+    name: "Employee",
+    icon: "ni ni-circle-08 text-pink",
+    component: <Employee />,
+    layout: "/admin",
+  },
+  {
+    path: "/fuelPurchase",
+    name: "Fuel Purchase",
+    icon: "ni ni-circle-08 text-pink",
+    component: <FuelPurchase />,
     layout: "/admin",
   },
   {
@@ -76,6 +132,7 @@ var routes = [
     component: <Profile />,
     layout: "/admin",
   },
+  
   // {
   //   path: "/tables",
   //   name: "Tables",

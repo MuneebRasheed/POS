@@ -22,6 +22,7 @@ import DataTable from "react-data-table-component";
 import FORM from "./FORM";
 
 import {GET,DELETE}  from './service'
+import { ErrorHandling } from "config/ErrorHandler";
 
 
 const Products = () => {
@@ -41,10 +42,11 @@ const Products = () => {
   
   const getData = async () => {
     setLoading(true);
-    const response = await GET();
+    const response = await ErrorHandling(GET);
+
     setLoading(false);
-    setTableData(response?.data);
-    setSearchTableData(response?.data);
+    setTableData(response?.data?.results);
+    setSearchTableData(response?.data?.results);
   };
   useEffect(() => {
     getData();
@@ -53,10 +55,10 @@ const Products = () => {
  
 
   const handleDelete = async (id) => {
-    try {
-      const response = await DELETE(id)
+    
+      const response = await ErrorHandling(DELETE,id)
       response.status == 200 && getData();
-    } catch (error) {}
+   
   };
 
   const customStyles = {
@@ -86,8 +88,8 @@ const Products = () => {
         (el) =>
           el.name?.toLowerCase().includes(value) ||
           el.type?.toLowerCase().includes(value) ||
-          el.purchasePrice.toString()?.toLowerCase().includes(value) ||
-          el.salePrice.toString()?.toLowerCase().includes(value)
+          el.purchase_rate.toString()?.toLowerCase().includes(value) ||
+          el.selling_rate.toString()?.toLowerCase().includes(value)
       );
       setTableData(filterObj);
     } else {
@@ -108,12 +110,12 @@ const Products = () => {
     },
     {
       name: "Slae Price",
-      selector: (row) => row.salePrice,
+      selector: (row) => row.selling_rate,
       sortable: true,
     },
     {
       name: "Purchase Price",
-      selector: (row) => row.purchasePrice,
+      selector: (row) => row.purchase_rate,
       sortable: true,
     },
 

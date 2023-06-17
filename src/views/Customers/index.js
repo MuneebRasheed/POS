@@ -28,7 +28,7 @@ import { ErrorHandling } from "config/ErrorHandler";
 const Products = () => {
   const [showModal, setShowModal] = React.useState(false);
   const [showEditModal, setShowEditModal] = React.useState(false);
-  const [editData, setEditData] = React.useState({});
+  const [editData, setEditData] = React.useState();
   const [tableData, setTableData] = useState([]);
   const [searchtableData, setSearchTableData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -57,7 +57,7 @@ const Products = () => {
    
       const response = await ErrorHandling(DELETE,id)
       response.status == 200 && getData();
- 
+  
   };
 
   const customStyles = {
@@ -86,9 +86,12 @@ const Products = () => {
       let filterObj = searchtableData.filter(
         (el) =>
           el.name?.toLowerCase().includes(value) ||
-          el.product?.toLowerCase().includes(value) ||
-          el.capacity.toString()?.toLowerCase().includes(value) 
-         
+          el.phone?.toLowerCase().includes(value) ||
+          el.address.toString()?.toLowerCase().includes(value) ||
+          el.discount[0].product.toString()?.toLowerCase().includes(value)||
+          el.discount[0].percentage.toString()?.toLowerCase().includes(value)||
+          el.vehicles[0].no.toString()?.toLowerCase().includes(value)||
+          el.vehicles[0].description.toString()?.toLowerCase().includes(value)
       );
       setTableData(filterObj);
     } else {
@@ -103,15 +106,35 @@ const Products = () => {
       sortable: true,
     },
     {
-      name: "Product",
-      selector: (row) => row.product,
+      name: "Phone",
+      selector: (row) => row.phone,
       sortable: true,
     },
     {
-      name: "Capacity",
-      selector: (row) => row.capacity,
+      name: "Address",
+      selector: (row) => row.address,
       sortable: true,
     },
+    {
+      name: "Vehical No.",
+      selector: (row) => row?.vehicles[0]?.no,
+      sortable: true,
+    },{
+      name: "Description",
+      selector: (row) => row.vehicles[0]?.description,
+      sortable: true,
+    },
+    {
+      name: "Product",
+      selector: (row) => row.discount[0]?.product,
+      sortable: true,
+    },
+    {
+      name: "Discount",
+      selector: (row) => row.discount[0]?.percentage,
+      sortable: true,
+    },
+
     {
       name: "Action",
       cell: (row, index) => (
@@ -151,7 +174,7 @@ const Products = () => {
                   as="h4"
                   className="d-flex justify-content-between align-items-center "
                 >
-                  <span>Fuel Tank </span>
+                  <span>Customer </span>
                   <div className="d-flex justify-content-between align-items-center">
                     <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
                       <FormGroup className="mb-0">
@@ -198,7 +221,6 @@ const Products = () => {
         </Row>
       </Container>
 
-     
 
       <FORM
         showModal={showEditModal}

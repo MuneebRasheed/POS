@@ -18,17 +18,15 @@ const Edit = ({ showModal, setShowModal, getData ,data,editBool}) => {
   
   const INITIAL_VALUES1 = {
     name: data.name,
-    type: data.type,
-    salePrice:data.salePrice,
-    purchasePrice: data.purchasePrice,
+    tank: data.tank,
+   
     
   };
 
   const INITIAL_VALUES = {
     name: "",
-    type: "",
-    salePrice: "",
-    purchasePrice: "",
+    tank: ""
+   
     
   };
 
@@ -67,18 +65,19 @@ const Edit = ({ showModal, setShowModal, getData ,data,editBool}) => {
   return (
     <>
       <Formik
-        initialValues={INITIAL_VALUES1}
+        initialValues={editBool?INITIAL_VALUES1:INITIAL_VALUES}
         onSubmit={async (values, { resetForm }) => {
           // alert("ascsdcfsdv");
           console.log(values, "sdshdgjhsdgsfg");
-          // if(editBool){
-          //   console.log("dataedit")
-          //   edit(values);
-          // }else{
-          //   create(values)
-          // }
-          // resetForm();
+          if(editBool){
+           
+            edit(values);
+          }else{
+            create(values)
+          }
+          resetForm();
         }}
+        enableReinitialize
       >
         {({ errors, setFieldValue,handleChange,values }) => (
 
@@ -126,18 +125,18 @@ const Edit = ({ showModal, setShowModal, getData ,data,editBool}) => {
                         </div>
                         <Field
                           as="select"
-                          name="type"
+                          name="tank"
                           className="form-control"
                           onChange={(e) => {
-                            setFieldValue("type", e.target.value);
+                            setFieldValue("tank", e.target.value);
                           }}
                         >
                           <option value="select tank" defaultValue>
-                            select product type
+                            select tank
                           </option>
-                          <option value="petrol">Tank1</option>
-                          <option value="deisel">Tank2</option>
-                          <option value="cng">Tank3</option>
+                          <option value="tank1">Tank1</option>
+                          <option value="tank2">Tank2</option>
+                          <option value="tank3">Tank3</option>
                           <option value="others">others</option>
                         </Field>
                        
